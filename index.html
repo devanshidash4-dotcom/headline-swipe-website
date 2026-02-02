@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Headline Swipe File</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        header p {
+            margin: 10px 0;
+        }
+
+        #search, #category-filter {
+            margin: 10px;
+            padding: 10px;
+            width: 200px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .headline {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .headline h3 {
+            margin: 0 0 10px 0;
+        }
+
+        .headline p {
+            margin: 0;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Headline Swipe File</h1>
+        <p>Inspiration for catchy headlines</p>
+        <input type="text" id="search" placeholder="Search headlines...">
+        <select id="category-filter">
+            <option value="all">All Categories</option>
+            <option value="marketing">Marketing</option>
+            <option value="blog">Blog</option>
+            <option value="sales">Sales</option>
+            <option value="product">Product</option>
+        </select>
+    </header>
+    <main id="headlines-container">
+        <!-- Headlines will be populated here -->
+    </main>
+    <script>
+        const headlines = [
+            { title: "10 Ways to Boost Your Sales in 2023", category: "sales", description: "Proven strategies to increase revenue." },
+            { title: "The Ultimate Guide to Content Marketing", category: "marketing", description: "Everything you need to know about creating engaging content." },
+            { title: "Why Your Blog Needs a Makeover", category: "blog", description: "Tips to refresh your blog and attract more readers." },
+            { title: "Introducing Our New Product Line", category: "product", description: "Discover the latest innovations." },
+            { title: "How to Close More Deals with Storytelling", category: "sales", description: "Use narratives to connect with customers." },
+            { title: "SEO Secrets for Beginners", category: "marketing", description: "Start optimizing your site today." },
+            { title: "Building a Loyal Audience", category: "blog", description: "Strategies for long-term engagement." },
+            { title: "Product Launch Checklist", category: "product", description: "Ensure a successful release." },
+            { title: "Email Marketing Best Practices", category: "marketing", description: "Craft campaigns that convert." },
+            { title: "From Idea to Published Post", category: "blog", description: "Your step-by-step blogging guide." }
+        ];
+
+        const headlinesContainer = document.getElementById('headlines-container');
+        const searchInput = document.getElementById('search');
+        const categoryFilter = document.getElementById('category-filter');
+
+        function displayHeadlines(filteredHeadlines) {
+            headlinesContainer.innerHTML = '';
+            filteredHeadlines.forEach(headline => {
+                const headlineDiv = document.createElement('div');
+                headlineDiv.className = 'headline';
+                headlineDiv.innerHTML = `
+                    <h3>${headline.title}</h3>
+                    <p>${headline.description}</p>
+                    <small>Category: ${headline.category}</small>
+                `;
+                headlinesContainer.appendChild(headlineDiv);
+            });
+        }
+
+        function filterHeadlines() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const selectedCategory = categoryFilter.value;
+            const filtered = headlines.filter(headline => {
+                const matchesSearch = headline.title.toLowerCase().includes(searchTerm) || headline.description.toLowerCase().includes(searchTerm);
+                const matchesCategory = selectedCategory === 'all' || headline.category === selectedCategory;
+                return matchesSearch && matchesCategory;
+            });
+            displayHeadlines(filtered);
+        }
+
+        searchInput.addEventListener('input', filterHeadlines);
+        categoryFilter.addEventListener('change', filterHeadlines);
+
+        // Initial display
+        displayHeadlines(headlines);
+    </script>
+</body>
+</html>
